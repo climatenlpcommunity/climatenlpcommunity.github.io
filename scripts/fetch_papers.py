@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 from exa_py import Exa
 import json
 import os
@@ -8,6 +8,8 @@ from rich.progress import track
 from pathlib import Path
 
 from exa_py.api import _Result, SearchResponse
+
+MIN_SCORE = 0.155
 
 def fetch_climate_nlp_papers() -> list[dict]:
     """Fetch recent papers about climate NLP using Exa AI."""
@@ -25,16 +27,20 @@ def fetch_climate_nlp_papers() -> list[dict]:
         query,
         use_autoprompt=True,
         num_results=100,
+        start_published_date=(datetime.now() - timedelta(days=30)).strftime("%Y-%m-%d"),
         # include_domains=["arxiv.org", "acl-anthology.org", "aclweb.org"]
     )
     
-    console.print(f"[bold green]Found {len(search_response.results)} results[/]")
-    
     papers = []
     for result in track(search_response.results, description="Processing results"):
+        if result.score is None or result.score < MIN_SCORE:
+            continue
+        
         paper = result.__dict__
         paper["date_retrieved"] = datetime.now().isoformat()
         papers.append(paper)
+    
+    console.print(f"[bold green]Found {len(papers)} papers with score >= {MIN_SCORE}[/]")
     
     return papers
 
