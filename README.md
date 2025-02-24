@@ -11,7 +11,7 @@ As a community, we aim to:
 
 ## Upcoming events
 
-- [2nd NLP for Climate workshop at ACL 2025]([url](https://nlp4climate.github.io/)) (1st August 2025)
+- [2nd NLP for Climate workshop at ACL 2025](https://nlp4climate.github.io/) (1st August 2025)
 
 ## Relevant research
 
