@@ -9,8 +9,6 @@ As a community, we aim to:
 - Share learning, informing each other of current developments and interesting resources
 - Proactively mentor female+ and underrepresented groups to be involved in the work of this community
 
-For more info, see our [main repo](https://github.com/climatenlpcommunity/whois).
-
 ## Upcoming events
 
 > [!WARNING]
