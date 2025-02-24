@@ -19,15 +19,19 @@ def sanitize_field(value: str | None) -> str:
 
 def main() -> None:
     """Generate markdown table from papers.jsonl."""
-    papers = []
     path = Path(__file__).parent.parent / "data/papers.jsonl"
+    
     with open(path, 'r') as f:
-        for line in f:
-            if line.strip():
-                papers.append(json.loads(line))
-
-    # Sort papers by published date (newest first)
-    papers.sort(key=lambda x: x.get('published_date', ''), reverse=True)
+        all_papers = [json.loads(line) for line in f if line.strip()]
+    
+    all_papers.sort(key=lambda x: x.get('published_date', ''), reverse=True)
+    
+    # Use dict comprehension to keep only the first (newest) occurrence of each title
+    papers = list({
+        paper.get('title', '').strip(): paper 
+        for paper in all_papers 
+        if paper.get('title', '').strip()
+    }.values())
 
     # Generate markdown table
     markdown = """# Recent Climate NLP Papers
