@@ -1,4 +1,4 @@
-# Recent Climate NLP Papers
+# Climate NLP Research
 
 Papers are sorted by publication date.
 
