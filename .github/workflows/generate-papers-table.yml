@@ -1,6 +1,7 @@
 name: Generate Papers Table
 
 on:
+  workflow_dispatch:  # Allows manual triggering from GitHub UI
   push:
     branches: [ main ]
     paths:
@@ -12,6 +13,8 @@ jobs:
     
     steps:
     - uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
     
     - name: Set up Python
       uses: actions/setup-python@v5
@@ -28,4 +31,4 @@ jobs:
         git config --local user.name "github-actions[bot]"
         git add PAPERS.md
         git commit -m "Update papers table" || exit 0
-        git push 
+        git push origin main 
