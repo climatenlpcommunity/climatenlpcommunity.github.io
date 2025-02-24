@@ -34,7 +34,7 @@ def main() -> None:
     }.values())
 
     # Generate markdown table
-    markdown = """# Recent Climate NLP Papers
+    markdown = """# Climate NLP Research
 
 Papers are sorted by publication date.
 
