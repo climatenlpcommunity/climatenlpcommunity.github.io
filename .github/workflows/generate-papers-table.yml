@@ -4,7 +4,7 @@ on:
   push:
     branches: [ main ]
     paths:
-      - 'papers.jsonl'
+      - 'data/papers.jsonl'
 
 jobs:
   generate-table:
