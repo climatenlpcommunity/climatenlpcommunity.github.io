@@ -1,6 +1,7 @@
 """Generate a markdown table from papers.jsonl."""
 import json
 from datetime import datetime
+from pathlib import Path
 
 def format_date(date_str: str) -> str:
     """Format date string to YYYY-MM-DD."""
@@ -19,7 +20,8 @@ def sanitize_field(value: str | None) -> str:
 def main() -> None:
     """Generate markdown table from papers.jsonl."""
     papers = []
-    with open('papers.jsonl', 'r') as f:
+    path = Path(__file__).parent.parent / "data/papers.jsonl"
+    with open(path, 'r') as f:
         for line in f:
             if line.strip():
                 papers.append(json.loads(line))
