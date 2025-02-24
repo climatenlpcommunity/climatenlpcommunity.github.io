@@ -5,6 +5,7 @@ import os
 import sys
 from rich.console import Console
 from rich.progress import track
+from pathlib import Path
 
 from exa_py.api import _Result, SearchResponse
 
@@ -48,6 +49,6 @@ def update_jsonl(papers: list[dict], output_file: str) -> None:
     console.print("[bold green]Done![/]")
 
 if __name__ == "__main__":
-    output_file = sys.argv[1] if len(sys.argv) > 1 else "papers.jsonl"
+    output_file = sys.argv[1] if len(sys.argv) > 1 else Path(__file__).parent.parent / "data/papers.jsonl"
     papers = fetch_climate_nlp_papers()
     update_jsonl(papers, output_file)
