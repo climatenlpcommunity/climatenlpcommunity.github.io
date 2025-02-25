@@ -13,12 +13,6 @@ As a community, we aim to:
 
 - [2nd NLP for Climate workshop at ACL 2025](https://nlp4climate.github.io/) (1st August 2025)
 
-## Relevant research
-
-A list of research within this intersection of fields is automatically curated in [PAPERS.md](PAPERS.md) via monthly pull requests. Note appearance of research in this repo does not imply endorsement.
-
-If you'd like to PR this repo to automatically categorise the research, that'd be welcome!
-
 ## Organisers
 
 This community is convened by:
