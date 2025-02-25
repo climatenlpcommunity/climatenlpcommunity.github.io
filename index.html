@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Climate NLP Community</title>
+    
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.dataTables.min.css">
+    
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .container {
+            margin-top: 30px;
+        }
+        table {
+            width: 100%;
+        }
+        #papers {
+            table-layout: fixed;
+        }
+        #papers td {
+            white-space: normal;
+            word-wrap: break-word;
+        }
+        #papers th:nth-child(1) { width: 100px; }  /* Date */
+        #papers th:nth-child(2) { width: 300px; }  /* Title */
+        #papers th:nth-child(3) { width: 200px; }  /* Authors */
+        #papers th:nth-child(4) { width: 100px; }  /* URL */
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="readme"></div>
+        <h2>Papers</h2>
+        <table id="papers" class="display responsive" style="width:100%">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Title</th>
+                    <th>Authors</th>
+                    <th>URL</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
+    
+    <script>
+        // Fetch and render README
+        fetch('README.md')
+            .then(response => response.text())
+            .then(text => {
+                document.getElementById('readme').innerHTML = marked.parse(text);
+            });
+
+        // Fetch and process PAPERS.md
+        fetch('PAPERS.md')
+            .then(response => response.text())
+            .then(text => {
+                const lines = text.split('\n');
+                const papers = [];
+                
+                let foundHeader = false;
+                for (let i = 0; i < lines.length; i++) {
+                    const line = lines[i].trim();
+                    if (line.startsWith('|---')) {
+                        foundHeader = true;
+                        continue;
+                    }
+                    if (foundHeader && line.startsWith('|')) {
+                        const [_, date, title, authors, urlCell] = line.split('|').map(cell => cell.trim());
+                        // More robust URL parsing
+                        const urlMatch = urlCell.match(/\[(.*?)\]\((.*?)\)/);
+                        const url = urlMatch ? urlMatch[2] : '';
+                        papers.push([date, title, authors, url ? `<a href="${url}" target="_blank">Link</a>` : '']);
+                    }
+                }
+
+                // Initialize DataTable
+                $('#papers').DataTable({
+                    data: papers,
+                    order: [[0, 'desc']],
+                    pageLength: 25,
+                    columns: [
+                        { title: "Date" },
+                        { title: "Title" },
+                        { title: "Authors" },
+                        { title: "URL" }
+                    ],
+                    scrollX: true  // Add horizontal scrolling if needed
+                });
+            });
+    </script>
+</body>
+</html> 
