@@ -1,4 +1,4 @@
-# Climate NLP Community
+# 🌱💬 Climate NLP Community
 
 We're a collective of practitioners and researchers working on natural language processing applied to various climate change applications. 
 
