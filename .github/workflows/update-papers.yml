@@ -27,7 +27,7 @@ jobs:
           uv sync
       
       - name: Fetch papers
-        run: python scripts/fetch_papers.py data/papers.jsonl
+        run: uv run python scripts/fetch_papers.py data/papers.jsonl
         env:
           EXA_API_KEY: ${{ secrets.EXA_API_KEY }}
       
